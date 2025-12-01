@@ -10,14 +10,19 @@ public class IntakeControl {
     private CRServo intakeMotorBottom;
     private CRServo intakeMotorTop;
 
+    private CRServo finalServo;
+
     public void init(HardwareMap hwmap) {
         intakeMotorBottom = hwmap.get(CRServo.class, "bottom");
         intakeMotorTop = hwmap.get(CRServo.class, "top");
         intakeMotorBottom.setDirection(DcMotorSimple.Direction.REVERSE);
         intakeMotorTop.setDirection(DcMotorSimple.Direction.FORWARD);
+        finalServo = hwmap.get(CRServo.class, "final");
+        finalServo.setDirection(DcMotorSimple.Direction.FORWARD);
     }
     public void drive(double intakePower) {
         intakeMotorBottom.setPower(intakePower);
         intakeMotorTop.setPower(intakePower);
+        finalServo.setPower(intakePower);
     }
 }

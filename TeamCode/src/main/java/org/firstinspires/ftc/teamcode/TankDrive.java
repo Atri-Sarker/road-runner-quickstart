@@ -67,7 +67,7 @@ public final class TankDrive {
         //   see https://ftc-docs.firstinspires.org/en/latest/programming_resources/imu/imu.html?highlight=imu#physical-hub-mounting
         // DONE!
         public RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection =
-                RevHubOrientationOnRobot.LogoFacingDirection.FORWARD;
+                RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD;
         public RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
                 RevHubOrientationOnRobot.UsbFacingDirection.UP;
 
@@ -143,7 +143,7 @@ public final class TankDrive {
             }
 
             // TODO: reverse encoder directions if needed
-            leftEncs.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
+            rightEncs.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
 
             this.pose = pose;
         }
@@ -237,7 +237,7 @@ public final class TankDrive {
         }
 
         // TODO: reverse motor directions if needed
-        leftMotors.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
+        rightMotors.get(0).setDirection(DcMotorSimple.Direction.REVERSE);
 
         // TODO: make sure your config has an IMU with this name (can be BNO or BHI)
         //   see https://ftc-docs.firstinspires.org/en/latest/hardware_and_software_configuration/configuring/index.html

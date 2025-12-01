@@ -33,11 +33,15 @@ public class BlueAutonomousSimple extends LinearOpMode {
         private CRServo firstRoller;
         private CRServo secondRoller;
 
+        private CRServo finalRoller;
+
         public Intake(HardwareMap hardwareMap) {
             firstRoller = hardwareMap.get(CRServo.class, "bottom");
             secondRoller = hardwareMap.get(CRServo.class, "top");
+            finalRoller = hardwareMap.get(CRServo.class, "final");
             firstRoller.setDirection(DcMotorSimple.Direction.FORWARD);
             secondRoller.setDirection(DcMotorSimple.Direction.REVERSE);
+            finalRoller.setDirection(DcMotorSimple.Direction.REVERSE);
         }
 
         public class PullArtifacts implements Action {
@@ -45,6 +49,7 @@ public class BlueAutonomousSimple extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 firstRoller.setPower(1.0);
                 secondRoller.setPower(1.0);
+                finalRoller.setPower(1.0);
                 return false;
             }
         }
@@ -57,6 +62,7 @@ public class BlueAutonomousSimple extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 firstRoller.setPower(-1.0);
                 secondRoller.setPower(-1.0);
+                finalRoller.setPower(-1.0);
                 return false;
             }
         }
@@ -69,6 +75,7 @@ public class BlueAutonomousSimple extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 firstRoller.setPower(0);
                 secondRoller.setPower(0);
+                finalRoller.setPower(0);
                 return false;
             }
         }
@@ -170,67 +177,104 @@ public class BlueAutonomousSimple extends LinearOpMode {
 //        TrajectoryActionBuilder tab4 = drive.actionBuilder(initialPose)
 //                .turnTo(Math.toRadians(90)).lineToY(-18);
 
-        TrajectoryActionBuilder goToShootPos = drive.actionBuilder(initialPose)
-                .turnTo(Math.toRadians(135))
+        TrajectoryActionBuilder goToShootPos1 = drive.actionBuilder(initialPose).fresh()
+                .turnTo(Math.toRadians(130))
               .lineToX(-38)
-              .waitSeconds(0.1);
+              .waitSeconds(0.1)
+                .turnTo(Math.toRadians(135));
 
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder middleman1 = goToShootPos1.endTrajectory().fresh()
                 .lineToX(-12)
                 .waitSeconds(0.1);
 
-        TrajectoryActionBuilder preparePick = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder preparePick1 = middleman1.endTrajectory().fresh()
                 .turnTo(Math.toRadians(180))
                 .waitSeconds(0.1);
 
-        TrajectoryActionBuilder forwardAndBack = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder forwardAndBack1 = preparePick1.endTrajectory().fresh()
                 .lineToX(-50)
                 .waitSeconds(0.3)
                 .lineToX(-12).waitSeconds(0.1);
 
-        TrajectoryActionBuilder goDown1 = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder goToShootPos2 = forwardAndBack1.endTrajectory().fresh()
+                .turnTo(Math.toRadians(130))
+                .lineToX(-38)
+                .waitSeconds(0.1).turnTo(Math.toRadians(135));
+
+        TrajectoryActionBuilder middleman2 = goToShootPos2.endTrajectory().fresh()
+                .lineToX(-12)
+                .waitSeconds(0.1);
+
+        TrajectoryActionBuilder goDown1 = middleman2.endTrajectory().fresh()
                     .turnTo((Math.toRadians(90)))
                     .lineToY(-12)
                     .waitSeconds(0.1);
 
-        TrajectoryActionBuilder goUp = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder preparePick2 = goDown1.endTrajectory().fresh()
+                .turnTo(Math.toRadians(180))
+                .waitSeconds(0.1);
+
+        TrajectoryActionBuilder forwardAndBack2 = preparePick2.endTrajectory().fresh()
+                .lineToX(-50)
+                .waitSeconds(0.3)
+                .lineToX(-12).waitSeconds(0.1);
+
+        TrajectoryActionBuilder goUp = forwardAndBack2.endTrajectory().fresh()
                 .turnTo((Math.toRadians(90)))
                 .lineToY(12)
                 .waitSeconds(0.1);
 
-        TrajectoryActionBuilder goDown2 = drive.actionBuilder(initialPose)
+        TrajectoryActionBuilder goToShootPos3 = goUp.endTrajectory().fresh()
+                .turnTo(Math.toRadians(130))
+                .lineToX(-38)
+                .waitSeconds(0.1).turnTo(Math.toRadians(135));
+
+        TrajectoryActionBuilder middleman3 = goToShootPos3.endTrajectory().fresh()
+                .lineToX(-12)
+                .waitSeconds(0.1);
+
+        TrajectoryActionBuilder goDown2 = middleman3.endTrajectory().fresh()
                 .turnTo((Math.toRadians(90)))
                 .lineToY(-36)
                 .waitSeconds(0.1);
+
+        TrajectoryActionBuilder preparePick3 = goDown2.endTrajectory().fresh()
+                .turnTo(Math.toRadians(180))
+                .waitSeconds(0.1);
+
+        TrajectoryActionBuilder forwardAndBack3 = preparePick3.endTrajectory().fresh()
+                .lineToX(-50)
+                .waitSeconds(0.3)
+                .lineToX(-12).waitSeconds(0.1);
 
 
         waitForStart();
 
         Actions.runBlocking(
                 new SequentialAction(
-                        goToShootPos.build(),
+                        goToShootPos1.build(),
                         catapult.shoot(),
-                        tab2.build(),
-                        preparePick.build(),
+                        middleman1.build(),
+                        preparePick1.build(),
                         intake.pullArtifacts(),
-                        forwardAndBack.build(),
+                        forwardAndBack1.build(),
                         intake.stopRolling(),
-                        goToShootPos.build(),
+                        goToShootPos2.build(),
                         catapult.shoot(),
-                        tab2.build(),
+                        middleman2.build(),
                         goDown1.build(),
-                        preparePick.build(),
+                        preparePick2.build(),
                         intake.pullArtifacts(),
-                        forwardAndBack.build(),
+                        forwardAndBack2.build(),
                         intake.stopRolling(),
                         goUp.build(),
-                        goToShootPos.build(),
+                        goToShootPos3.build(),
                         catapult.shoot(),
-                        tab2.build(),
+                        middleman3.build(),
                         goDown2.build(),
-                        preparePick.build(),
+                        preparePick3.build(),
                         intake.pullArtifacts(),
-                        forwardAndBack.build(),
+                        forwardAndBack3.build(),
                         intake.stopRolling()
                 )
         );

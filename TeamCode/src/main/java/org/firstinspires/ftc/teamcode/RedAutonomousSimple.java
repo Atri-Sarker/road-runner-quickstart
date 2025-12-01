@@ -33,11 +33,15 @@ public class RedAutonomousSimple extends LinearOpMode {
         private CRServo firstRoller;
         private CRServo secondRoller;
 
+        private CRServo finalRoller;
+
         public Intake(HardwareMap hardwareMap) {
             firstRoller = hardwareMap.get(CRServo.class, "bottom");
             secondRoller = hardwareMap.get(CRServo.class, "top");
+            finalRoller = hardwareMap.get(CRServo.class, "final");
             firstRoller.setDirection(DcMotorSimple.Direction.FORWARD);
             secondRoller.setDirection(DcMotorSimple.Direction.REVERSE);
+            finalRoller.setDirection(DcMotorSimple.Direction.REVERSE);
         }
 
         public class PullArtifacts implements Action {
@@ -45,6 +49,7 @@ public class RedAutonomousSimple extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 firstRoller.setPower(1.0);
                 secondRoller.setPower(1.0);
+                finalRoller.setPower(1.0);
                 return false;
             }
         }
@@ -57,6 +62,7 @@ public class RedAutonomousSimple extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 firstRoller.setPower(-1.0);
                 secondRoller.setPower(-1.0);
+                finalRoller.setPower(-1.0);
                 return false;
             }
         }
@@ -69,6 +75,7 @@ public class RedAutonomousSimple extends LinearOpMode {
             public boolean run(@NonNull TelemetryPacket packet) {
                 firstRoller.setPower(0);
                 secondRoller.setPower(0);
+                finalRoller.setPower(0);
                 return false;
             }
         }

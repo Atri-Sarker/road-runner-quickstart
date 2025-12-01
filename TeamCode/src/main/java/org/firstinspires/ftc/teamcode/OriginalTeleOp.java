@@ -24,8 +24,13 @@ public class OriginalTeleOp extends OpMode {
 
     @Override
     public void loop() {
-        throttle = -gamepad1.left_stick_y;
-        spin = gamepad1.left_stick_x;
+        throttle = -Math.pow(gamepad1.left_stick_y,3);
+        spin = Math.pow(gamepad1.left_stick_x, 3);
+
+        if (gamepad1.left_bumper) {
+            throttle *= 0.3;
+            spin *= 0.3;
+        }
 
         drive.drive(throttle, spin);
         catapult.handleCatapult(gamepad1.right_bumper);
