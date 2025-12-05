@@ -18,11 +18,11 @@ public class IntakeControl {
         intakeMotorBottom.setDirection(DcMotorSimple.Direction.REVERSE);
         intakeMotorTop.setDirection(DcMotorSimple.Direction.FORWARD);
         finalServo = hwmap.get(CRServo.class, "final");
-        finalServo.setDirection(DcMotorSimple.Direction.FORWARD);
+        finalServo.setDirection(DcMotorSimple.Direction.REVERSE);
     }
     public void drive(double intakePower) {
         intakeMotorBottom.setPower(intakePower);
         intakeMotorTop.setPower(intakePower);
-        finalServo.setPower(intakePower);
+        finalServo.setPower(intakePower*0.3);
     }
 }

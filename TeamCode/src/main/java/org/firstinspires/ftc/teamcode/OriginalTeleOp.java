@@ -1,9 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.mechanisms.CatapultAction;
 import org.firstinspires.ftc.teamcode.mechanisms.CatapultControl;
+import org.firstinspires.ftc.teamcode.mechanisms.IndexServoAction;
 import org.firstinspires.ftc.teamcode.mechanisms.IntakeControl;
 import org.firstinspires.ftc.teamcode.mechanisms.TDrive;
 
@@ -11,15 +14,18 @@ import org.firstinspires.ftc.teamcode.mechanisms.TDrive;
 public class OriginalTeleOp extends OpMode {
 
     TDrive drive = new TDrive();
-    CatapultControl catapult = new CatapultControl();
+    CatapultAction catapultSystem;
     IntakeControl intakeServo = new IntakeControl();
+
+    IndexServoAction indexer;
     double throttle, spin;
 
     @Override
     public void init() {
         drive.init(hardwareMap);
-        catapult.init(hardwareMap);
+        catapultSystem = new CatapultAction(hardwareMap);
         intakeServo.init(hardwareMap);
+        indexer = new IndexServoAction(hardwareMap);
     }
 
     @Override
@@ -27,17 +33,33 @@ public class OriginalTeleOp extends OpMode {
         throttle = -Math.pow(gamepad1.left_stick_y,3);
         spin = Math.pow(gamepad1.left_stick_x, 3);
 
-        if (gamepad1.left_bumper) {
+        if (gamepad1.left_trigger >= 0.5) {
             throttle *= 0.3;
             spin *= 0.3;
         }
 
         drive.drive(throttle, spin);
-        catapult.handleCatapult(gamepad1.right_bumper);
+        if (gamepad1.left_bumper) {
+            Actions.runBlocking(catapultSystem.leftShootStrong());
+        }
+        if (gamepad1.right_bumper) {
+            Actions.runBlocking(catapultSystem.rightShootStrong());
+        }
+        if (gamepad1.right_trigger >= 0.5) {
+            Actions.runBlocking(catapultSystem.LeftRightLeft);
+        }
+        if (gamepad1.x) {
+            indexer.ultraLeft();
+        }
+        else if (gamepad1.y) {
+            indexer.ultraRight();
+        } else {
+            indexer.stop();
+        }
         if (gamepad1.a) {
             intakeServo.drive(1.0);
         } else if (gamepad1.b) {
-            intakeServo.drive(-1.0);
+            intakeServo.drive(-0.3);
         } else {
             intakeServo.drive(0.0);
         }
