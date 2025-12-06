@@ -75,7 +75,7 @@ public class CatapultAction {
                 return true;
             }
             if (LEFT_SHOOTING.equals("DOWN")) {
-                if (left_catatime.seconds() > 0.3) {
+                if (left_catatime.seconds() > 0.4) {
                     LEFT_SHOOTING = "UP";
                     left_catatime.reset();
                     leftCatapult.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -86,7 +86,7 @@ public class CatapultAction {
                 if (left_catatime.seconds() > 0.1) {
                     leftCatapult.setPower(CATAPULT_UP_POWER);
                 }
-                if (left_catatime.seconds() > 0.32) {
+                if (left_catatime.seconds() > 0.34) {
                     leftCatapult.setPower(0);
                     LEFT_SHOOTING = "FALSE";
                     return false;
@@ -113,7 +113,7 @@ public class CatapultAction {
                 return true;
             }
             if (RIGHT_SHOOTING.equals("DOWN")) {
-                if (right_catatime.seconds() > 0.3) {
+                if (right_catatime.seconds() > 0.4) {
                     RIGHT_SHOOTING = "UP";
                     right_catatime.reset();
                     rightCatapult.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -124,7 +124,7 @@ public class CatapultAction {
                 if (right_catatime.seconds() > 0.1) {
                     rightCatapult.setPower(CATAPULT_UP_POWER);
                 }
-                if (right_catatime.seconds() > 0.32) {
+                if (right_catatime.seconds() > 0.34) {
                     rightCatapult.setPower(0);
                     RIGHT_SHOOTING = "FALSE";
                     return false;

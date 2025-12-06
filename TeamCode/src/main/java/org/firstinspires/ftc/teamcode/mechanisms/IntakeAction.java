@@ -7,6 +7,7 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class IntakeAction {
 
@@ -21,13 +22,16 @@ public class IntakeAction {
     private double lastServoReduction = 0.3;
     private double pushReduction = 0.3;
 
-    public void IntakeAction(HardwareMap hwmap) {
+    private CRServo indexServo;
+    public IntakeAction(HardwareMap hwmap) {
         intakeMotorBottom = hwmap.get(CRServo.class, "bottom");
         intakeMotorTop = hwmap.get(CRServo.class, "top");
         intakeMotorBottom.setDirection(DcMotorSimple.Direction.REVERSE);
         intakeMotorTop.setDirection(DcMotorSimple.Direction.FORWARD);
         finalServo = hwmap.get(CRServo.class, "final");
         finalServo.setDirection(DcMotorSimple.Direction.REVERSE);
+        indexServo = hwmap.get(CRServo.class, "indexServo");
+        indexServo.setDirection(DcMotorSimple.Direction.FORWARD);
     }
 
     public class Pull implements Action {
@@ -58,6 +62,47 @@ public class IntakeAction {
             finalServo.setPower(pushPower * pushReduction);
             return false;
         }
+    }
+
+    public class AbsorbArtifacts implements Action {
+        public double duration = 0;
+        public double indexPower = 0.3;
+        public ElapsedTime indexTime = new ElapsedTime();
+
+        public void resetTime() {
+            indexTime.reset();
+        }
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            // RUN INTAKES
+            intakeMotorBottom.setPower(pullPower);
+            intakeMotorTop.setPower(pullPower);
+            finalServo.setPower(pullPower * lastServoReduction);
+
+            // MANAGE INDEXER DIRECTION
+            if ( Math.round(indexTime.seconds() * 3) % 2 == 0 ) {
+                indexServo.setPower(indexPower);
+            } else {
+                indexServo.setPower(-1 * indexPower);
+            }
+
+            // EXIT CONDITION
+            if ( indexTime.seconds() > duration ) {
+                intakeMotorBottom.setPower(0);
+                intakeMotorTop.setPower(0);
+                finalServo.setPower(0);
+                indexServo.setPower(0);
+
+                return false;
+            }
+            return true;
+        }
+    }
+
+    public Action intakeForSeconds() {
+        AbsorbArtifacts temp = new AbsorbArtifacts();
+        temp.duration = 4;
+        return temp;
     }
 
 }

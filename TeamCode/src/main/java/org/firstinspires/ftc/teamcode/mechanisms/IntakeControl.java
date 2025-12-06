@@ -23,6 +23,6 @@ public class IntakeControl {
     public void drive(double intakePower) {
         intakeMotorBottom.setPower(intakePower);
         intakeMotorTop.setPower(intakePower);
-        finalServo.setPower(intakePower*0.3);
+        finalServo.setPower(intakePower*0.2);
     }
 }

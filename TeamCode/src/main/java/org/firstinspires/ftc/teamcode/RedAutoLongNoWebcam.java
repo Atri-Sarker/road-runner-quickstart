@@ -12,17 +12,17 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.mechanisms.CatapultAction;
-import org.firstinspires.ftc.teamcode.mechanisms.IndexServoAction;
 import org.firstinspires.ftc.teamcode.mechanisms.IntakeAction;
 import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesBlue;
+import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesRed;
 
 @Config
-@Autonomous(name = "Blue Autonomous Far Side [No Webcam]", group = "Autonomous")
-public class BlueAutoLongNoWebcam extends LinearOpMode  {
+@Autonomous(name = "Red Autonomous Far Side [No Webcam]", group = "Autonomous")
+public class RedAutoLongNoWebcam extends LinearOpMode  {
     @Override
     public void runOpMode() {
         // IMPORT POSITIONS
-        RobotFieldPosesBlue Field = new RobotFieldPosesBlue();
+        RobotFieldPosesRed Field = new RobotFieldPosesRed();
         // IMPORT CATAPULT ACTIONS
         CatapultAction CatapultSystem = new CatapultAction(hardwareMap);
         // IMPORT INTAKE ACTIONS

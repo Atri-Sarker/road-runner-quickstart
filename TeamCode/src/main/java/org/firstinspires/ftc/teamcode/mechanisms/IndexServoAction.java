@@ -13,10 +13,10 @@ public class IndexServoAction {
         indexServo.setDirection(DcMotorSimple.Direction.FORWARD);
     }
     public void ultraLeft() {
-        indexServo.setPower(-1);
+        indexServo.setPower(-0.5);
     }
     public void ultraRight() {
-        indexServo.setPower(1);
+        indexServo.setPower(0.5);
     }
 
     public void stop() {

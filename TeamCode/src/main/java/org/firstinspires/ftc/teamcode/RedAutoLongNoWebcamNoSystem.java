@@ -1,10 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -13,20 +10,20 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.mechanisms.CatapultAction;
 import org.firstinspires.ftc.teamcode.mechanisms.IndexServoAction;
-import org.firstinspires.ftc.teamcode.mechanisms.IntakeAction;
 import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesBlue;
+import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesRed;
 
 @Config
-@Autonomous(name = "Blue Autonomous Far Side [No Webcam]", group = "Autonomous")
-public class BlueAutoLongNoWebcam extends LinearOpMode  {
+@Autonomous(name = "Red Autonomous Far Side [No Webcam] [NO SYSTEMS]", group = "Autonomous")
+public class RedAutoLongNoWebcamNoSystem extends LinearOpMode  {
     @Override
     public void runOpMode() {
         // IMPORT POSITIONS
-        RobotFieldPosesBlue Field = new RobotFieldPosesBlue();
+        RobotFieldPosesRed Field = new RobotFieldPosesRed();
         // IMPORT CATAPULT ACTIONS
         CatapultAction CatapultSystem = new CatapultAction(hardwareMap);
-        // IMPORT INTAKE ACTIONS
-        IntakeAction IntakeSystem = new IntakeAction(hardwareMap);
+        // IMPORT INDEXER ACTIONS
+        IndexServoAction IndexerSystem = new IndexServoAction(hardwareMap);
         // Start Position
         Pose2d initialPose = Field.startPoseLong;
         TankDrive drive = new TankDrive(hardwareMap, initialPose);
@@ -42,7 +39,7 @@ public class BlueAutoLongNoWebcam extends LinearOpMode  {
         );
 
         // SHOOT
-        Actions.runBlocking(CatapultSystem.LeftRightLeft);
+        Actions.runBlocking(new SleepAction(0.5));
 
         // Drive to First Artifact Set
         TrajectoryActionBuilder shootPoseToFirstSet = tabStartPoseToShootPose.endTrajectory().fresh()
@@ -54,10 +51,8 @@ public class BlueAutoLongNoWebcam extends LinearOpMode  {
                 .lineToX(Field.ArtifactSetEnd_X);
         TrajectoryActionBuilder goBack1 = pickTab1.endTrajectory().fresh()
                 .splineTo(Field.GPPStart.position, Field.directionUP);
-        // Intake Action
-        Action intakeIndex = IntakeSystem.intakeForSeconds();
-
-        Actions.runBlocking(new ParallelAction(intakeIndex, new SequentialAction(pickTab1.build(), goBack1.build())));
+        Actions.runBlocking(pickTab1.build());
+        Actions.runBlocking(goBack1.build());
 
         // Drive Back to Shoot Pose
         TrajectoryActionBuilder firstSetToShootPose = goBack1.endTrajectory().fresh()
@@ -65,7 +60,7 @@ public class BlueAutoLongNoWebcam extends LinearOpMode  {
         Actions.runBlocking(firstSetToShootPose.build());
 
         // SHOOT
-        Actions.runBlocking(CatapultSystem.LeftRightLeft);
+        Actions.runBlocking(new SleepAction(0.5));
 
         // Drive to Second Artifact Set
         TrajectoryActionBuilder shootPoseToSecondSet = tabStartPoseToShootPose.endTrajectory().fresh()
@@ -75,10 +70,10 @@ public class BlueAutoLongNoWebcam extends LinearOpMode  {
         // Pick Up Artifacts and Go Back [Second Set]
         TrajectoryActionBuilder pickTab2 = shootPoseToSecondSet.endTrajectory().fresh()
                 .lineToX(Field.ArtifactSetEnd_X);
-        TrajectoryActionBuilder goBack2 = pickTab2.endTrajectory().fresh()
+        TrajectoryActionBuilder goBack2 = pickTab1.endTrajectory().fresh()
                 .splineTo(Field.PGPStart.position, Field.directionUP);
-
-        Actions.runBlocking(new ParallelAction(intakeIndex, new SequentialAction(pickTab2.build(), goBack2.build())));
+        Actions.runBlocking(pickTab2.build());
+        Actions.runBlocking(goBack2.build());
 
         // Drive Back to Shoot Pose
         TrajectoryActionBuilder secondSetToShootPose = goBack2.endTrajectory().fresh()
@@ -86,7 +81,7 @@ public class BlueAutoLongNoWebcam extends LinearOpMode  {
         Actions.runBlocking(secondSetToShootPose.build());
 
         // SHOOT
-        Actions.runBlocking(CatapultSystem.LeftRightLeft);
+        Actions.runBlocking(new SleepAction(0.5));
 
         // Drive to End Position
         Actions.runBlocking(secondSetToShootPose.endTrajectory().fresh().lineToX(Field.ArtifactSetEnd_X).build());

@@ -71,10 +71,10 @@ public final class TankDrive {
         public RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
                 RevHubOrientationOnRobot.UsbFacingDirection.UP;
 
-        public double inPerTick = 0.0110227273;
-        public double kA = 4e-7;
-        public double kS = 1.4489448002715068;
-        public double kV = 0.004187274487954575;
+        public double inPerTick = 0.0104347826086957;
+        public double kA = 4e-5;
+        public double kS = 1.4410416475199135;
+        public double kV = 0.004054075982628346;
         public double maxAngAccel = 3.141592653589793;
         public double maxAngVel = 3.141592653589793;
         public double maxProfileAccel = 50;
@@ -82,7 +82,7 @@ public final class TankDrive {
         public double minProfileAccel = -30;
         public double ramseteBBar = 2;
         public double ramseteZeta = 0.7;
-        public double trackWidthTicks = 1237.9892485425298;
+        public double trackWidthTicks = 1208.8912655961817;
         public double turnGain = 0;
         public double turnVelGain = 0;
     }
