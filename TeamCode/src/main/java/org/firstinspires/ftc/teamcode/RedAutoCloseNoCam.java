@@ -3,19 +3,17 @@ package org.firstinspires.ftc.teamcode;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SleepAction;
-import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.mechanisms.CatapultAction;
 import org.firstinspires.ftc.teamcode.mechanisms.IndexServoAction;
-import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesBlue;
 import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesRed;
 
 @Config
-@Autonomous(name = "Red Autonomous Close Side [No Webcam] [NO SYSTEMS]", group = "Autonomous")
-public class RedAutoCloseNoWebcamNoSystem extends LinearOpMode  {
+@Autonomous(name = "Red Autonomous Close Side [No Webcam] [Just Driving]", group = "Autonomous")
+public class RedAutoCloseNoCam extends LinearOpMode  {
     @Override
     public void runOpMode() {
         // IMPORT POSITIONS

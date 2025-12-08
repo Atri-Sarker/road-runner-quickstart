@@ -10,7 +10,7 @@ public class TDrive {
     double currentThrottlePower = 0.0;
     double currentSpinPower = 0.0;
 
-    final double ACCEL_LIMIT = 0.05;
+    final double ACCEL_LIMIT = 0.03;
 
     public void init(HardwareMap hwmap) {
         leftMotor = hwmap.get(DcMotor.class, "left_motor");
@@ -24,6 +24,7 @@ public class TDrive {
     }
 
     public void drive(double desiredThrottle, double desiredSpin) {
+        desiredSpin *= 0.4;
         // Ramp the throttle input
         if (Math.abs(desiredThrottle - currentThrottlePower) > ACCEL_LIMIT) {
             currentThrottlePower += Math.signum(desiredThrottle - currentThrottlePower) * ACCEL_LIMIT;

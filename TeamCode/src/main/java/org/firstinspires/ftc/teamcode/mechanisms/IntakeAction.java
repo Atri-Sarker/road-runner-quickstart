@@ -99,9 +99,10 @@ public class IntakeAction {
         }
     }
 
-    public Action intakeForSeconds() {
+    public Action intakeForSeconds(double seconds) {
         AbsorbArtifacts temp = new AbsorbArtifacts();
-        temp.duration = 4;
+        temp.duration = seconds;
+        temp.resetTime();
         return temp;
     }
 

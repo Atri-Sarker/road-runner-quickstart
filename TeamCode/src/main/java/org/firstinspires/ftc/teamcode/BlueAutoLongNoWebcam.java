@@ -42,7 +42,7 @@ public class BlueAutoLongNoWebcam extends LinearOpMode  {
         );
 
         // SHOOT
-        Actions.runBlocking(CatapultSystem.LeftRightLeft);
+        Actions.runBlocking(CatapultSystem.LeftRightLeft());
 
         // Drive to First Artifact Set
         TrajectoryActionBuilder shootPoseToFirstSet = tabStartPoseToShootPose.endTrajectory().fresh()
@@ -55,7 +55,7 @@ public class BlueAutoLongNoWebcam extends LinearOpMode  {
         TrajectoryActionBuilder goBack1 = pickTab1.endTrajectory().fresh()
                 .splineTo(Field.GPPStart.position, Field.directionUP);
         // Intake Action
-        Action intakeIndex = IntakeSystem.intakeForSeconds();
+        Action intakeIndex = IntakeSystem.intakeForSeconds(2);
 
         Actions.runBlocking(new ParallelAction(intakeIndex, new SequentialAction(pickTab1.build(), goBack1.build())));
 
@@ -65,7 +65,7 @@ public class BlueAutoLongNoWebcam extends LinearOpMode  {
         Actions.runBlocking(firstSetToShootPose.build());
 
         // SHOOT
-        Actions.runBlocking(CatapultSystem.LeftRightLeft);
+        Actions.runBlocking(CatapultSystem.LeftRightLeft());
 
         // Drive to Second Artifact Set
         TrajectoryActionBuilder shootPoseToSecondSet = tabStartPoseToShootPose.endTrajectory().fresh()
@@ -86,7 +86,7 @@ public class BlueAutoLongNoWebcam extends LinearOpMode  {
         Actions.runBlocking(secondSetToShootPose.build());
 
         // SHOOT
-        Actions.runBlocking(CatapultSystem.LeftRightLeft);
+        Actions.runBlocking(CatapultSystem.LeftRightLeft());
 
         // Drive to End Position
         Actions.runBlocking(secondSetToShootPose.endTrajectory().fresh().lineToX(Field.ArtifactSetEnd_X).build());

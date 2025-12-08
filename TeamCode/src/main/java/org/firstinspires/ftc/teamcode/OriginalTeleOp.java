@@ -19,6 +19,7 @@ public class OriginalTeleOp extends OpMode {
 
     IndexServoAction indexer;
     double throttle, spin;
+    boolean intakeToggled = false;
 
     @Override
     public void init() {
@@ -33,6 +34,19 @@ public class OriginalTeleOp extends OpMode {
         throttle = -Math.pow(gamepad1.left_stick_y,3);
         spin = Math.pow(gamepad1.left_stick_x, 3);
 
+        if (gamepad1.dpad_left) {
+            spin = -0.6;
+        }
+        if (gamepad1.dpad_right) {
+            spin = 0.6;
+        }
+        if (gamepad1.dpad_down) {
+            throttle = -0.6;
+        }
+        if (gamepad1.dpad_up) {
+            throttle = 0.6;
+        }
+
         if (gamepad1.left_trigger >= 0.5) {
             throttle *= 0.3;
             spin *= 0.3;
@@ -46,7 +60,7 @@ public class OriginalTeleOp extends OpMode {
             Actions.runBlocking(catapultSystem.rightShootStrong());
         }
         if (gamepad1.right_trigger >= 0.5) {
-            Actions.runBlocking(catapultSystem.LeftRightLeft);
+            Actions.runBlocking(catapultSystem.LeftRightLeft());
         }
         if (gamepad1.x) {
             indexer.ultraLeft();
@@ -58,8 +72,10 @@ public class OriginalTeleOp extends OpMode {
         }
         if (gamepad1.a) {
             intakeServo.drive(1.0);
+            intakeToggled = true;
         } else if (gamepad1.b) {
-            intakeServo.drive(-0.3);
+            intakeServo.drive(-0.7);
+            intakeToggled = true;
         } else {
             intakeServo.drive(0.0);
         }

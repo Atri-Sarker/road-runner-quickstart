@@ -3,44 +3,48 @@ package org.firstinspires.ftc.teamcode.mechanisms;
 import android.util.Size;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.opencv.ImageRegion;
 import org.firstinspires.ftc.vision.opencv.PredominantColorProcessor;
+
+import java.util.List;
 
 public class WebcamControl {
 
     /**
      * The variable to store our instance of the AprilTag processor.
      */
-    private AprilTagProcessor aprilTag;
+    public AprilTagProcessor aprilTag;
 
     /**
      * The variable to store our instance of the vision portal.
      */
-    private VisionPortal visionPortal;
+    public VisionPortal visionPortal;
 
     /**
      * COLOR SENSORS
      */
-    private PredominantColorProcessor leftColorSensor, middleColorSensor, rightColorSensor;
+    public PredominantColorProcessor leftColorSensor, middleColorSensor, rightColorSensor;
 
     /**
      * Regions for color sensors
      */
-    private ImageRegion leftRegion = ImageRegion.asUnityCenterCoordinates(-0.1, 0.1, 0.1, -0.1);
-    private ImageRegion middleRegion = ImageRegion.asUnityCenterCoordinates(-0.1, 0.1, 0.1, -0.1);
-    private ImageRegion rightRegion = ImageRegion.asUnityCenterCoordinates(-0.1, 0.1, 0.1, -0.1);
+    public ImageRegion leftRegion = ImageRegion.asUnityCenterCoordinates(-0.1, 0.1, 0.1, -0.1);
+    public ImageRegion middleRegion = ImageRegion.asUnityCenterCoordinates(-0.1, 0.1, 0.1, -0.1);
+    public ImageRegion rightRegion = ImageRegion.asUnityCenterCoordinates(-0.1, 0.1, 0.1, -0.1);
 
     // VISION PORTAL
-    private VisionPortal portal;
+    public VisionPortal portal;
 
 
 
     // Init Webcam
-    public void init(HardwareMap hardwareMap) {
+    public WebcamControl(HardwareMap hardwareMap) {
 
         // Create the AprilTag processor.
         aprilTag = new AprilTagProcessor.Builder()
@@ -104,13 +108,99 @@ public class WebcamControl {
                 .addProcessor(leftColorSensor)
                 .addProcessor(middleColorSensor)
                 .addProcessor(rightColorSensor)
-                .setCameraResolution(new Size(640, 480))
+                .setCameraResolution(new Size(640, 360))
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
                 .build();
     }
 
     // Scan For Color Combination
+    private String mapColorToCode(PredominantColorProcessor.Swatch swatch) {
+        if (swatch == null) {
+            return "?";
+        }
+
+        switch (swatch) {
+            case ARTIFACT_GREEN:
+                return "G";
+            case ARTIFACT_PURPLE:
+                return "P";
+            case RED:
+                return "R";
+            case BLUE:
+                return "B";
+            case YELLOW:
+                return "Y";
+            case BLACK:
+                return "K";
+            case WHITE:
+                return "W";
+            default:
+                return "?";
+        }
+    }
+
+    // Scan For Color Combination
+    public String scanArtifactColors() {
+
+        // Get detected predominant colors from each region
+        PredominantColorProcessor.Swatch left   = leftColorSensor.getAnalysis().closestSwatch;
+        PredominantColorProcessor.Swatch middle = middleColorSensor.getAnalysis().closestSwatch;
+        PredominantColorProcessor.Swatch right  = rightColorSensor.getAnalysis().closestSwatch;
+
+        // Convert swatch to single letter code
+        String leftCode   = mapColorToCode(left);
+        String middleCode = mapColorToCode(middle);
+        String rightCode  = mapColorToCode(right);
+
+        // If any are unknown, return UNKNOWN
+        if (leftCode.equals("?") || middleCode.equals("?") || rightCode.equals("?")) {
+            return "UNKNOWN";
+        }
+
+        // Concatenate into pattern
+        return leftCode + middleCode + rightCode;
+    }
 
     // Scan For Motif Pattern April Tag
+    public String decodeMotifFromID(int id) {
+        switch (id) {
+            case 21:
+                return "GPP";
+            case 22:
+                return "PGP";
+            case 23:
+                return "PPG";
+            default:
+                return "UNKNOWN";
+        }
+    }
+
+    //
+    public String waitForDecodeMotif(double timeoutSeconds) {
+
+        ElapsedTime timer = new ElapsedTime();
+        timer.reset();
+
+        while (timer.seconds() < timeoutSeconds) {
+
+            List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+
+            for (AprilTagDetection tag : currentDetections) {
+
+                String motif = decodeMotifFromID(tag.id);
+
+                if (!motif.equals("UNKNOWN")) {
+                    // Disable April Tag Processor
+                    portal.setProcessorEnabled(aprilTag, false);
+                    return motif;     // return immediately when a valid motif tag is found
+                }
+            };
+
+        }
+
+        return "PGP";   // Random Motif
+    }
+
+
 
 }
