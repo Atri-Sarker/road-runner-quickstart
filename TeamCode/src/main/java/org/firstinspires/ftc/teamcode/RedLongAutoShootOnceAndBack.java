@@ -10,7 +10,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.mechanisms.CatapultAction;
 import org.firstinspires.ftc.teamcode.mechanisms.IntakeAction;
 import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesRed;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @Config
 @Autonomous(name = "RED AUTO [SHOOT ONCE] [AGAINST FAR SIDE]", group = "Autonomous")
 public class RedLongAutoShootOnceAndBack extends LinearOpMode  {

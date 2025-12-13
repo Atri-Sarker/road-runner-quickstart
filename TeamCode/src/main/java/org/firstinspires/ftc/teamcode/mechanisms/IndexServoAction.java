@@ -24,10 +24,10 @@ public class IndexServoAction {
     }
 
     public void smallLeft() {
-        indexServo.setPower(-0.2);
+        indexServo.setPower(-0.1);
     }
     public void smallRight() {
-        indexServo.setPower(0.2);
+        indexServo.setPower(0.1);
     }
 
 

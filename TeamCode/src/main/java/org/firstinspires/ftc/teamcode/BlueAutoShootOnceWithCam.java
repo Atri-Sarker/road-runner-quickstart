@@ -11,7 +11,8 @@ import org.firstinspires.ftc.teamcode.mechanisms.CatapultAction;
 import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesBlue;
 import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesRed;
 import org.firstinspires.ftc.teamcode.mechanisms.WebcamControl;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @Config
 @Autonomous(name = "BLUE AUTO [SCAN CAM] [SHOOT ONCE]", group = "Autonomous")
 public class BlueAutoShootOnceWithCam extends LinearOpMode  {

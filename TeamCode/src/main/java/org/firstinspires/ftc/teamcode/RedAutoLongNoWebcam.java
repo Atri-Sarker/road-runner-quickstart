@@ -15,7 +15,8 @@ import org.firstinspires.ftc.teamcode.mechanisms.CatapultAction;
 import org.firstinspires.ftc.teamcode.mechanisms.IntakeAction;
 import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesBlue;
 import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesRed;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @Config
 @Autonomous(name = "Red Autonomous Far Side [No Webcam]", group = "Autonomous")
 public class RedAutoLongNoWebcam extends LinearOpMode  {

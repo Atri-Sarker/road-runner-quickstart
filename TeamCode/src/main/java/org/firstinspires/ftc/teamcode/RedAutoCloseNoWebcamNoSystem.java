@@ -6,6 +6,7 @@ import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.mechanisms.CatapultAction;
@@ -13,6 +14,8 @@ import org.firstinspires.ftc.teamcode.mechanisms.IndexServoAction;
 import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesBlue;
 import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesRed;
 
+
+@Disabled
 @Config
 @Autonomous(name = "Red Autonomous Close Side [No Webcam] [NO SYSTEMS]", group = "Autonomous")
 public class RedAutoCloseNoWebcamNoSystem extends LinearOpMode  {

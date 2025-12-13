@@ -5,6 +5,7 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.mechanisms.CatapultAction;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.mechanisms.WebcamControl;
 
 @Config
 @Autonomous(name = "RED AUTO [SCAN CAM] [SHOOT ONCE]", group = "Autonomous")
+@Disabled
 public class MostSimpleMoveForward extends LinearOpMode  {
     @Override
     public void runOpMode() {

@@ -28,22 +28,22 @@ public class CatapultAction {
     private ElapsedTime indextime = new ElapsedTime();
 
     // Powers for loading and shooting the catapult
-    private double CATAPULT_UP_POWER = -1;
+    public double CATAPULT_UP_POWER = -1;
     private double CATAPULT_DOWN_POWER = 1;
 
     // INDEX LEFT POWER
-    private double INDEX_LEFT_POWER = -0.35;
+    private double INDEX_LEFT_POWER = -0.25;
     private String LEFT_SHOOTING = "FALSE";
     private String RIGHT_SHOOTING = "FALSE";
 
     private String IS_INDEXING = "FALSE";
 
     // Delay for Catapult Sequence
-    public double CatapultWaitTime = 1.2;
+    public double CatapultWaitTime = 0.5;
 
     // Launch
-    private double CatapultDownTime = 0.37;
-    private double CatapultHoldTime = 0.1;
+    private double CatapultDownTime = 0.5;
+    private double CatapultHoldTime = 0.2;
     private double CatapultReleaseTime = 0.32;
 
     // Initialize
@@ -154,7 +154,7 @@ public class CatapultAction {
                 return true;
             }
             if (IS_INDEXING.equals("TRUE")) {
-                if (indextime.seconds() > 1.0) {
+                if (indextime.seconds() > 2.0) {
                     indexServo.setPower(0);
                     IS_INDEXING = "FALSE";
                     return false;
@@ -181,7 +181,7 @@ public class CatapultAction {
                 return true;
             }
             if (IS_INDEXING.equals("TRUE")) {
-                if (indextime.seconds() > 1.0) {
+                if (indextime.seconds() > 2.0) {
                     indexServo.setPower(0);
                     IS_INDEXING = "FALSE";
                     return false;
@@ -203,7 +203,7 @@ public class CatapultAction {
             new SequentialAction(
                     leftShootStrong(),
                     indexToLeft(),
-                    new SleepAction(CatapultWaitTime),
+                    new SleepAction(CatapultWaitTime*0.2),
                     leftShootStrong()
             ),
             new SequentialAction(
@@ -218,7 +218,7 @@ public class CatapultAction {
                 new SequentialAction(
                         rightShootStrong(),
                         indexToRight(),
-                        new SleepAction(CatapultWaitTime),
+                        new SleepAction(CatapultWaitTime*0.2),
                         rightShootStrong()
                 ),
                 new SequentialAction(
@@ -232,10 +232,10 @@ public class CatapultAction {
         return new ParallelAction(
                 new SequentialAction(
                         leftShootStrong(),
-                        indexToRight(),
-                        new SleepAction(CatapultWaitTime),
+                        indexToLeft(),
+                        new SleepAction(CatapultWaitTime*0.2),
                         leftShootStrong(),
-                        new SleepAction(CatapultWaitTime),
+                        new SleepAction(CatapultWaitTime*0.2),
                         rightShootStrong()
                 ),
                 new SleepAction(CatapultWaitTime)
@@ -247,9 +247,9 @@ public class CatapultAction {
                 new SequentialAction(
                         rightShootStrong(),
                         indexToRight(),
-                        new SleepAction(CatapultWaitTime),
+                        new SleepAction(CatapultWaitTime*0.2),
                         rightShootStrong(),
-                        new SleepAction(CatapultWaitTime),
+                        new SleepAction(CatapultWaitTime*0.2),
                         leftShootStrong()
                 ),
                 new SleepAction(CatapultWaitTime)

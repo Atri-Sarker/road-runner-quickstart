@@ -25,7 +25,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.TankDrive;
 import org.firstinspires.ftc.teamcode.mechanisms.CatapultControl;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @Config
 @Autonomous(name = "Red Autonomous Simple", group = "Autonomous")
 public class RedAutonomousSimple extends LinearOpMode {

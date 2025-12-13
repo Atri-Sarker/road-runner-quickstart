@@ -10,7 +10,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.mechanisms.CatapultAction;
 import org.firstinspires.ftc.teamcode.mechanisms.IntakeAction;
 import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesBlue;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @Config
 @Autonomous(name = "BLUE AUTO [JUST FORWARD]", group = "Autonomous")
 public class BlueJustMoveForward extends LinearOpMode  {

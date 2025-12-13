@@ -12,7 +12,8 @@ import org.firstinspires.ftc.teamcode.mechanisms.CatapultAction;
 import org.firstinspires.ftc.teamcode.mechanisms.IndexServoAction;
 import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesRed;
 import org.firstinspires.ftc.teamcode.mechanisms.WebcamControl;
-
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+@Disabled
 @Config
 @Autonomous(name = "RED AUTO [SCAN CAM] [SHOOT ONCE]", group = "Autonomous")
 public class RedAutoShootOnceWithCam extends LinearOpMode  {

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.acmerobotics.roadrunner.ftc.Actions;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.mechanisms.IntakeControl;
 import org.firstinspires.ftc.teamcode.mechanisms.TDrive;
 
 @TeleOp(name="Drive + Catapult", group="Linear OpMode")
+@Disabled
 public class OriginalTeleOp extends OpMode {
 
     TDrive drive = new TDrive();

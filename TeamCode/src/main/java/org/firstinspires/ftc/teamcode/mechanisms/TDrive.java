@@ -10,7 +10,7 @@ public class TDrive {
     double currentThrottlePower = 0.0;
     double currentSpinPower = 0.0;
 
-    final double ACCEL_LIMIT = 0.03;
+    final double ACCEL_LIMIT = 0.012;
 
     public void init(HardwareMap hwmap) {
         leftMotor = hwmap.get(DcMotor.class, "left_motor");
