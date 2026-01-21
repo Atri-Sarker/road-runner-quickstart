@@ -72,7 +72,7 @@ public class BlueAutoFarSide extends LinearOpMode  {
         TankDrive drive = new TankDrive(hardwareMap, initialPose);
 
         // CATAPULT POWER SET TO A LOWER NUMBER
-        CatapultSystem.CATAPULT_UP_POWER = -0.9;
+        CatapultSystem.CATAPULT_UP_POWER = -1;
 
         // WAIT FOR START
         waitForStart();

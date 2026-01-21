@@ -14,13 +14,13 @@ public class RobotFieldPosesBlue {
     public Pose2d initialGoalPose = new Pose2d(-48, -48, directionFacingGoal);
 
     public Pose2d initialFarPose = new Pose2d(-13, -52, directionUP);
-    public Pose2d startPoseClose = new Pose2d(-13, 16, directionUP);
+    public Pose2d startPoseClose = new Pose2d(-13, 19, directionUP);
     public Pose2d startPoseLong = new Pose2d(-15, -65, directionUP);
 
     // Shooting Positions
     public  Pose2d shootPoseLong = new Pose2d(-15, -60, directionFacingGoal);
     public Pose2d shootPoseMedium = new Pose2d(-48, 48, Math.toRadians(135));
-    public Pose2d shootPoseClose = new Pose2d(-13, 16, directionFacingGoal);
+    public Pose2d shootPoseClose = new Pose2d(-13, 19, directionFacingGoal);
 
 
     // X Value for the start of artifact sets

@@ -32,6 +32,8 @@ public class BlueAutoShootOnceAndBack extends LinearOpMode  {
         // Initialize Drive
         TankDrive drive = new TankDrive(hardwareMap, initialPose);
 
+        waitForStart();
+
         // GO TO STARTING POSE
         TrajectoryActionBuilder tabStartPoseToStartPose = drive.actionBuilder(initialPose)
                 .lineToX(Field.startPoseClose.position.x)

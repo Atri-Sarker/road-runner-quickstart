@@ -11,8 +11,7 @@ import org.firstinspires.ftc.teamcode.mechanisms.IndexServoAction;
 import org.firstinspires.ftc.teamcode.mechanisms.IntakeControl;
 import org.firstinspires.ftc.teamcode.mechanisms.TDrive;
 
-@TeleOp(name="Drive + Catapult", group="Linear OpMode")
-@Disabled
+@TeleOp(name="Drive + Catapult [solo]", group="Linear OpMode")
 public class OriginalTeleOp extends OpMode {
 
     TDrive drive = new TDrive();

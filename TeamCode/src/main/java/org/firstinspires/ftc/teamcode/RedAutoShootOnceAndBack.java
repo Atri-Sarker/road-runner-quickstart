@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.mechanisms.RobotFieldPosesRed;
 import org.firstinspires.ftc.teamcode.mechanisms.WebcamControl;
 
 @Config
-@Autonomous(name = "RED AUTO [SCAN CAM] [SHOOT ONCE] [AGAINST WALL]", group = "Autonomous")
+@Autonomous(name = "RED AUTO [NO CAM] [SHOOT ONCE] [AGAINST WALL]", group = "Autonomous")
 public class RedAutoShootOnceAndBack extends LinearOpMode  {
     @Override
     public void runOpMode() {
@@ -28,6 +28,8 @@ public class RedAutoShootOnceAndBack extends LinearOpMode  {
         // WebcamControl CameraScanner = new WebcamControl(hardwareMap);
         // IMPORT INTAKE ACTIONS
         IntakeAction IntakeSystem = new IntakeAction(hardwareMap);
+
+        waitForStart();
 
         // Start facing the goal
         Pose2d initialPose = Field.initialGoalPose;
@@ -50,7 +52,7 @@ public class RedAutoShootOnceAndBack extends LinearOpMode  {
         // DRIVE TO SHOOTING POSITION
         TrajectoryActionBuilder tabStartPoseToShootPose = tabStartPoseToStartPose.endTrajectory().fresh()
                 .turnTo(Field.directionFacingGoal)
-                .lineToX(Field.shootPoseClose.position.x);
+                .lineToX(Field.shootPoseClose.position.x+1);
         Actions.runBlocking(
                 tabStartPoseToShootPose.build()
         );
@@ -58,10 +60,10 @@ public class RedAutoShootOnceAndBack extends LinearOpMode  {
         // Shoot [First Load is always PPG]
         Actions.runBlocking(CatapultSystem.getShootAction(scannedMotif, "PPG"));
 
-        // Rotate towards UP and go down
+        // Rotate towards UP and go UP
         TrajectoryActionBuilder shootPoseToFirstSet = tabStartPoseToShootPose.endTrajectory().fresh()
                 .turnTo(Field.directionUP)
-                .lineToY(Field.PGPStart.position.y)
+                .lineToY(48)
                 .turnTo(Field.directionFacingRamp);
         Actions.runBlocking(shootPoseToFirstSet.build());
     }
